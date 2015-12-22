@@ -11,9 +11,7 @@ if [ -f /firstrun ]
 
     echo "Running for first time..need to configure..."
 
-    source /mysql-setup.sh
     source /mail-setup.sh
-    source /apache-setup.sh
 
     # Stopping ALL services so data can be moved if needed
     /etc/init.d/apache2 stop
@@ -25,18 +23,18 @@ if [ -f /firstrun ]
 
     # Moving data /data or not?
     if [ ! -d /data ]
-      then 
+      then
         echo "No /data found so assuming you've set up your own persistent volumes (-v </<dir> or --volumes-from <data container> ) or don't want it "
       else
         BASE="/data"
-        
+
         if `ls -A $BASE`
-         then 
+         then
            echo "Clean install apparently"
 
 	   # Put certs on one place
            mkdir $BASE/ssl $BASE/ssl/certs $BASE/ssl/keys
-       
+
            # Moving data to data volume and symlinking them
            mv /var/lib/mysql $BASE/mysql
            ln -s $BASE/mysql /var/lib/mysql
@@ -45,11 +43,11 @@ if [ -f /firstrun ]
            ln -s $BASE/www /var/www
            # Set ownership of www dir to www-data
            chown -R www-data.www-data $BASE/www
-           
+
            # Move maildir
            mv /var/vmail $BASE/vmail
            ln -s $BASE/vmail /var/vmail
-          
+
            # Move certs and keys
            mv /etc/ssl/certs/ssl-cert-snakeoil.pem $BASE/ssl/certs/ssl-$HOSTNAME.pem
            ln -s $BASE/ssl/certs/ssl-$HOSTNAME.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
@@ -65,13 +63,13 @@ if [ -f /firstrun ]
            mv $BASE/www $BASE/www.old
            mv /var/www $BASE/www
            ln -s $BASE/www /var/www
-	   # copying configs
+	         # copying configs
            cp $BASE/www.old/html/config/config.php $BASE/www/html/config/config.php
            cp $BASE/www.old/postfixadmin/config.local.php $BASE/www/postfixadmin/config.local.php
            # moving owncloud data
            rm -rf $BASE/www/html/data
-	   mv $BASE/www.old/html/data $BASE/www/html/data
-           # also copy apps, since reenabling them whithout being installed yet will give a start update process 
+	         mv $BASE/www.old/html/data $BASE/www/html/data
+           # also copy apps, since reenabling them whithout being installed yet will give a start update process
            # for every app :(. You still have to reenable them though. but that's owncloud's thing
            cp -dpr $BASE/www.old/html/apps $BASE/www/html/
            # Set ownership of www dir to www-data
@@ -84,31 +82,29 @@ if [ -f /firstrun ]
            rm -rf /var/vmail
            ln -s $BASE/vmail /var/vmail
            # certs
-           rm /etc/ssl/certs/ssl-cert-snakeoil.pem 
+           rm /etc/ssl/certs/ssl-cert-snakeoil.pem
            ln -s $BASE/ssl/certs/ssl-$HOSTNAME.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
-           rm /etc/ssl/private/ssl-cert-snakeoil.key 
+           rm /etc/ssl/private/ssl-cert-snakeoil.key
            ln -s $BASE/ssl/keys/ssl-$HOSTNAME.key /etc/ssl/private/ssl-cert-snakeoil.key
-           rm /etc/dovecot/dovecot.pem 
+           rm /etc/dovecot/dovecot.pem
            ln -s $BASE/ssl/certs/dovecot.pem /etc/dovecot/dovecot.pem
-           rm /etc/dovecot/private/dovecot.pem 
+           rm /etc/dovecot/private/dovecot.pem
            ln -s $BASE/ssl/keys/dovecot.pem /etc/dovecot/private/dovecot.pem
-      
+
         fi
     fi
-    
+
     # clean up
     rm /*-setup.sh
     rm /firstrun
 
 fi
-    
+
 # Sometimes with un unclean exit the rsyslog pid doesn't get removed and refuses to start
 if [ -f /var/run/rsyslogd.pid ]
-  then rm /var/run/rsyslogd.pid 
+  then rm /var/run/rsyslogd.pid
 fi
 
 
 # Start supervisor to start the services
 /usr/bin/supervisord
-
-
