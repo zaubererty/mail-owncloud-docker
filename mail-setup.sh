@@ -28,16 +28,6 @@ fi
     postconf -e "mydestination = `cat /etc/hostname`"
     postconf -e "inet_interfaces = all"
 
-    # configure postfixadmin
-    echo "Alias /postfixadmin /var/www/postfixadmin" > /etc/apache2/conf-available/postfixadmin.conf
-    ln -s /etc/apache2/conf-available/postfixadmin.conf /etc/apache2/conf-available/postfixadmin.conf
-    a2enconf postfixadmin
-    # Set correct url for postafixadmin site, cause it originally shows a russian site
-    #sed -i "s/postfixadmin\.com/postfixadmin\.sf\.net/g" /usr/share/postfixadmin/templates/footer.php
-    # For default aliases set TLD to hostname`
-    DOMAIN=`hostname -d`
-    sed -i "s/change-this-to-your\.domain\.tld/$DOMAIN/g" /var/www/postfixadmin/config.inc.php
-
     # Create sieve-scripts dir cause it's not done automaticaly
     mkdir /var/vmail/sieve-scripts
     chown -R vmail.mail /var/vmail/sieve-scripts

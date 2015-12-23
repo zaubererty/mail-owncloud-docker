@@ -70,7 +70,7 @@ connect = host=VAR_SQLHOST dbname=VAR_SQLDB user=VAR_SQLUSR password=VAR_SQLPWD
 # List of supported schemes is in
 # http://wiki2.dovecot.org/Authentication/PasswordSchemes
 #
-default_pass_scheme = VAR_PASS_SCHEME
+default_pass_scheme = MD5
 
 # passdb query to retrieve the password. It can return fields:
 #   password - The user's password. This field must be returned.

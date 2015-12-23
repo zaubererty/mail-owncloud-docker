@@ -2,7 +2,6 @@
 **Contents:**
 - postfix smtp mailserver with virtual domains/users and authentication
   via imap
-- postfixadmin to administer email domains/mailboxes
 - dovecot imap server
 - dovecot sieve for filtering rules
 - spamassassin for spam filtering
@@ -27,7 +26,7 @@ docker run -d \
 - SQLPWD  => mysql password
 - SQLHOST => mysql server
 - SQLDB   => mysql dbname
-- PASS_SCHEME => default pass scheme for dovecot
+- Pass scheme for dovecot is MD5
 ```
 # To use own certificates:
 ```
