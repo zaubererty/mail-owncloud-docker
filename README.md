@@ -17,8 +17,8 @@ docker run -d \
   -v /etc/timezone:/etc/timezone:ro \
   -v <path to data on host>:/data \
   -p 143:143 -p 993:993 -p 4190:4190 -p 25:25 -p 465:465 \
-  --name mycloud -h <FQDN of host> \
-  idef1x/mail-owncloud-docker
+  --name mymailserver -h <FQDN of host> \
+  zauberertz/mailserver§-docker
 ```
 # Optional environment vars to use:
 ```
@@ -43,5 +43,8 @@ docker run -d \
 - all logging is sent to a stdout and stderr
 
 # Networks
-- 10.0.0.0/8
+- 10.42.0.0/16
 - 127.0.0.0/8
+```
+- MYNETWORKS => Host IP or IP range that should be able to relay
+```
