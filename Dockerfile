@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -yq\
   dovecot-imapd dovecot-mysql dovecot-sieve dovecot-managesieved \
   spamassassin razor \
 	pwgen \
+	postgrey \
 	supervisor
 
 COPY startup.sh /startup.sh
