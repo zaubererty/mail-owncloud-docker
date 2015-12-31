@@ -18,7 +18,7 @@ docker run -d \
   -v <path to data on host>:/data \
   -p 143:143 -p 993:993 -p 4190:4190 -p 25:25 -p 465:465 \
   --name mymailserver -h <FQDN of host> \
-  zauberertz/mailserver§-docker
+  zauberertz/mailserver-docker
 ```
 # Optional environment vars to use:
 ```
@@ -45,6 +45,4 @@ docker run -d \
 # Networks
 - 10.42.0.0/16
 - 127.0.0.0/8
-```
 - MYNETWORKS => Host IP or IP range that should be able to relay
-```
