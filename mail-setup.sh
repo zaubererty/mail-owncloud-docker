@@ -29,7 +29,7 @@ fi
     postconf -e "inet_interfaces = all"
 
 if [[ $MYNETWORKS ]]; then
-  sed -i "/^mynetworks/ s/$/ $MYNETWORKS/" /etc/postfix/main.cf
+  sed -i 's:^\(mynetworks =.*\):\1 '"$MYNETWORKS"':' /etc/postfix/main.cf
 fi
 
     # Create sieve-scripts dir cause it's not done automaticaly
