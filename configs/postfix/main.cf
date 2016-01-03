@@ -69,5 +69,6 @@ virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf, mysql:/etc/
 virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf
 
 virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
 
 message_size_limit = 0
