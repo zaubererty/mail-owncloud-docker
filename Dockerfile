@@ -31,13 +31,12 @@ RUN chmod +x /startup.sh
 COPY configs/postfix /etc/postfix
 COPY configs/dovecot /etc/dovecot
 COPY configs/spamassassin /etc/spamassassin
-COPY configs/apache2 /etc/apache2/sites-available
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY postfix.sh /postfix.sh
 
 # Cleanup
 RUN apt-get clean
 
-EXPOSE 25 143 993 465 80 443
+EXPOSE 25 143 993 465
 
 ENTRYPOINT [ "/startup.sh" ]
